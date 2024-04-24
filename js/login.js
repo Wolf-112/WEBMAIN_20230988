@@ -28,7 +28,8 @@ const check_input = () => {
         return false;
         }
         const hasSpecialChar = passwordValue.match(/[!,@#$%^&*()_+\-
-        =\[\]{};':"\\|,.<>\/?]+/) !== null;
+        =\[
+            \]{};':"\\|,.<>\/?]+/) !== null;
         if (!hasSpecialChar) {
         alert('패스워드는 특수문자를 1개 이상 포함해야 합니다.');
         return false;
