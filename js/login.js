@@ -59,6 +59,7 @@ const check_input = () => {
     { // 아이디 체크 x 
         setCookie("id", emailValue.value, 0); //날짜를 0 - 쿠키 삭제
     }
+    session_set();
     loginForm.submit();
     };
     document.getElementById("login_btn").addEventListener('click', check_input);
@@ -91,9 +92,17 @@ function init() { // 로그인 폼에 쿠키에서 가져온 아이디 입력
 }
     
 function session_set() { // 세션 저장
-    let session_id = document.querySelector("#typeEmailX");
-    let session_pass = document.querySelector("#typeEmailX");
+    let id = document.querySelector("#floatingInput");
+    let password = document.querySelector("#floatingPassword");
+    let random = new Date();
+
+    const obj = {
+    id : id.value,
+    otp : random
+    }
+
     if (sessionStorage) {
+        const objString = JSON.stringify(obj);
         let en_text = encrypt_text(session_pass.value);
         sessionStorage.setItem("Session_Storage_id", session_id.value);
         sessionStorage.setItem("Session_Storage_pass", en_text);
@@ -105,7 +114,7 @@ function session_set() { // 세션 저장
 
 function session_get() {//세션 읽기
     if (sessionStorage) {
-        return sessionStorage.getItem("Session_Storage_pass");
+        return sessionStorage.getItem("Session_Storage_encrypted");
     } else {
         alert("세션 스토리지 지원 x");
     }
@@ -175,3 +184,14 @@ function init_logined(){
         alert("세션 스토리지 지원x");
     }
 }
+
+function addJavascript(jsname) { 
+    var th = document.getElementsByTagName('head')[0];
+    var s = document.createElement('script');
+    s.setAttribute('type','text/javascript');
+    s.setAttribute('src',jsname);
+    th.appendChild(s);
+}
+addJavascript('/js/security.js');
+addJavascript('/js/session.js');
+addJavascript('/js/cookie.js');
